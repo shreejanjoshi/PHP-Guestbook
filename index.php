@@ -1,4 +1,22 @@
+<?php 
+
 declare(strict_type=1)
+
+// file exit or not 
+if(file_exists("log.txt")){
+    //if file exit made variable and store
+    $file = "message.txt"; 
+
+    // made new varible which will get content to this file
+    $current = file_get_contents($file);
+
+}else{
+    // if there is no file make a file
+    $myfile = fopen("message.txt","w")
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
