@@ -3,54 +3,65 @@
 class Post
 {
 
-    // private $title;
-    // private $content;
-    // private $authorName;
+    private $title;
+    private $content;
+    private $author;
     // private $date;
 
     private $file = 'data.json';
 
-    function __construct($title, $content, $authorName)
+    function __construct()
     {
-        // $this->title = $title;
+        $this->title = $this->checked($_POST['title']);
         // $this->date = $date('d-m-y');
-        // $this->content = $content;
-        // $this->authorName = $authorName;
+        $this->content = $this->checked($_POST['content']);
+        $this->author = $this->checked($_POST['author']);
 
-        if (file_exists($this->file)) {
-            $this->message($title, $content, $authorName);
-        } else {
-            $myfile = fopen($this->file, 'w');
-            header("Refresh:0");
+        // if (file_exists($this->file)) {
+        //     $this->message($title, $content, $authorName);
+        // } else {
+        //     $myfile = fopen($this->file, 'w');
+        //     header("Refresh:0");
+        // }
+    }
+
+    public function newMessage()
+    {
+        return[
+        "data" => [
+            'title' =>  $this->title,
+            'content' => $this->content,
+            'author' => $this->author,
+            'date' => date("Y/m/d Hs:i")
+        ]
+        ];
+    }
+
+    public function newPost($content) {
+        if(count($this->error) == 0) {
+            file_put_contents("data.json", json_encode($content));
         }
     }
 
-    // function addFile(){
-
-    // }
-
-    // public function message()
-    // {
-    //     $data = [
-    //         'title' =>  $this->title,
-    //         'content' => $this->content,
-    //         'authorName' => $this->authorName,
-    //         'date' => $this->date
-    //     ]
-    // }
+    private function checked($input) {
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        return $input;
+    }
 
     // file exit or not 
-    function message($title, $content, $authorName)
-    {
-        $data = json_decode(file_get_contents($this->file));
-        $data[] = array(
-            'title' => $title,
-            'content' => $content,
-            'author' => $authorName,
-            'date' => date('d-m-y')
-        );
-        $json = json_encode($data);
-        file_put_contents($this->file, $json);
+    // function message($title, $content, $authorName)
+    // {
+    //     $data = json_decode(file_get_contents($this->file));
+    //     $data[] = array(
+    //         'title' => $title,
+    //         'content' => $content,
+    //         'author' => $authorName,
+    //         'date' => date('d-m-y')
+    //     );
+    //     $json = json_encode($data);
+    //     file_put_contents($this->file, $json);
 
         // if (file_exists("message.txt")) {
         //     //if file exit made variable and store
@@ -74,7 +85,7 @@ class Post
         // header("Refresh:0");
         // _________________________________________________________________________
         // }
-    }
+    // }
 
     // public function title(){
     //     return $this->title;

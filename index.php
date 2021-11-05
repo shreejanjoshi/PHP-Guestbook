@@ -6,6 +6,20 @@ require('PostLoader.php');
 $postLoader = new PostLoader();
 $postLoader->addData();
 
+$posts = new PostLoader();
+    $page = 1;
+    $count = 2;
+    if(isset($_POST['number_of_post']) && !empty($_POST['number_of_post'])) {
+        $count = $_POST['number_of_post'];
+    }
+    if(isset($_GET['page'] ) && !empty($_GET['page'])) {
+        $page = $_GET['page'];
+    }
+
+    $page_posts = $posts->getData($page, $count);
+
+        header("Refresh:0");
+    }
 
 ?>
 
@@ -24,7 +38,7 @@ $postLoader->addData();
     <div class="form">
         <form action="index.php" method="POST">
 
-            <input type="text" placeholder="First Name" name="authorName">
+            <input type="text" placeholder="First Name" name="author">
             <input type="text" placeholder="Title" name="title">
             <textarea name="content" cols="100%" rows="10" charswidth="23"></textarea>
             <input type="submit" name="submit">
